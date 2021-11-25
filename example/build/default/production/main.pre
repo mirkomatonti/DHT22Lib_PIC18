@@ -5109,7 +5109,6 @@ typedef uint16_t uintptr_t;
 
 # 19 "dht22.h"
 typedef struct {
-unsigned sensorPin;
 float temperature;
 float humidity;
 }dhtvalues_t;
@@ -5201,7 +5200,6 @@ void main(void) {
 Init_IO();
 char Text[128];
 dhtvalues_t sensor_values;
-sensor_values.sensorPin=PORTDbits.RD0;
 while(1)
 {
 PORTA = 0x04;

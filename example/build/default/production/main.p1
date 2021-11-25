@@ -53,28 +53,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _WriteUSART `(v ~T0 @X0 0 ef1`uc ]
 [p mainexit ]
 "19 dht22.h
-[s S396 `ui 1 `f 1 `f 1 ]
-[n S396 . sensorPin temperature humidity ]
-"540 C:\Program Files (x86)\Microchip\xc8\v1.35\include\pic18f4620.h
-[s S24 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S24 . RD0 RD1 RD2 RD3 RD4 RD5 RD6 RD7 ]
-"550
-[s S25 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S25 . PSP0 PSP1 PSP2 PSP3 PSP4 PSP5 PSP6 PSP7 ]
-"560
-[s S26 :5 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S26 . . P1B P1C P1D ]
-"566
-[s S27 :7 `uc 1 :1 `uc 1 ]
-[n S27 . . SS2 ]
-"539
-[u S23 `S24 1 `S25 1 `S26 1 `S27 1 ]
-[n S23 . . . . . ]
-"571
-[v _PORTDbits `VS23 ~T0 @X0 0 e@3971 ]
+[s S396 `f 1 `f 1 ]
+[n S396 . temperature humidity ]
 "37 C:\Program Files (x86)\Microchip\xc8\v1.35\include\plib\delays.h
 [v _Delay10KTCYx `(v ~T0 @X0 0 ef1`uc ]
-"26 dht22.h
+"25 dht22.h
 [v _readValues `(uc ~T0 @X0 0 ef1`*S396 ]
 "194 C:\Program Files (x86)\Microchip\xc8\v1.35\include\stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
@@ -3846,11 +3829,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 210: typedef int16_t intptr_t;
 [; ;stdint.h: 215: typedef uint16_t uintptr_t;
 [; ;dht22.h: 19: typedef struct {
-[; ;dht22.h: 20: unsigned sensorPin;
-[; ;dht22.h: 21: float temperature;
-[; ;dht22.h: 22: float humidity;
-[; ;dht22.h: 23: }dhtvalues_t;
-[; ;dht22.h: 26: uint8_t readValues(dhtvalues_t *sensor_data);
+[; ;dht22.h: 20: float temperature;
+[; ;dht22.h: 21: float humidity;
+[; ;dht22.h: 22: }dhtvalues_t;
+[; ;dht22.h: 25: uint8_t readValues(dhtvalues_t *sensor_data);
 "17 main.c
 [p x OSC=HS ]
 "18
@@ -4003,50 +3985,47 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _sensor_values `S396 ~T0 @X0 1 a ]
 [; ;main.c: 97: char Text[128];
 [; ;main.c: 98: dhtvalues_t sensor_values;
-[; ;main.c: 99: sensor_values.sensorPin=PORTDbits.RD0;
+[; ;main.c: 99: while(1)
 "99
-[e = . _sensor_values 0 -> . . _PORTDbits 0 0 `ui ]
-[; ;main.c: 100: while(1)
-"100
 [e :U 408 ]
-[; ;main.c: 101: {
-"101
+[; ;main.c: 100: {
+"100
 {
-[; ;main.c: 102: PORTA = 0x04;
-"102
+[; ;main.c: 101: PORTA = 0x04;
+"101
 [e = _PORTA -> -> 4 `i `uc ]
-[; ;main.c: 103: Delay10KTCYx(200);
-"103
+[; ;main.c: 102: Delay10KTCYx(200);
+"102
 [e ( _Delay10KTCYx (1 -> -> 200 `i `uc ]
-[; ;main.c: 104: if(readValues(&sensor_values))
-"104
+[; ;main.c: 103: if(readValues(&sensor_values))
+"103
 [e $ ! != -> ( _readValues (1 &U _sensor_values `i -> -> -> 0 `i `uc `i 410  ]
-[; ;main.c: 105: sprintf(Text, "humi:%.2f temp:%.2f \r\n",sensor_values.humidity,sensor_values.temperature);
-"105
-[e ( _sprintf (1 , , (. , &U _Text :s 1C -> . _sensor_values 2 `d -> . _sensor_values 1 `d ]
+[; ;main.c: 104: sprintf(Text, "humi:%.2f temp:%.2f \r\n",sensor_values.humidity,sensor_values.temperature);
+"104
+[e ( _sprintf (1 , , (. , &U _Text :s 1C -> . _sensor_values 1 `d -> . _sensor_values 0 `d ]
 [e $U 411  ]
-"106
+"105
 [e :U 410 ]
-[; ;main.c: 106: else
-[; ;main.c: 107: sprintf(Text, "Error reading the sensor \r\n");
-"107
+[; ;main.c: 105: else
+[; ;main.c: 106: sprintf(Text, "Error reading the sensor \r\n");
+"106
 [e ( _sprintf (1 , &U _Text :s 2C ]
 [e :U 411 ]
-[; ;main.c: 108: USARTOut(Text, strlen(Text));
-"108
+[; ;main.c: 107: USARTOut(Text, strlen(Text));
+"107
 [e ( _USARTOut (2 , &U _Text -> ( _strlen (1 -> &U _Text `*Cuc `uc ]
-[; ;main.c: 109: PORTA = 0x05;
-"109
+[; ;main.c: 108: PORTA = 0x05;
+"108
 [e = _PORTA -> -> 5 `i `uc ]
-"110
+"109
 }
 [e :U 407 ]
-"100
+"99
 [e $U 408  ]
 [e :U 409 ]
+[; ;main.c: 109: }
 [; ;main.c: 110: }
-[; ;main.c: 111: }
-"111
+"110
 [e :UE 406 ]
 }
 [p f _sprintf 8462336 ]
