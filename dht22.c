@@ -1,6 +1,11 @@
 #include "dht22.h"
 
-
+/*
+ * Function:  dht22_inizialize 
+ * --------------------
+ * Wake up the sensor from deep sleep
+ * 
+ */
 void dht22_inizialize()
 {
     // set the pin to output
@@ -17,6 +22,13 @@ void dht22_inizialize()
     PORT_DIR=1;    
 }
 
+/*
+ * Function:  dht22_response 
+ * --------------------
+ * Check if the sensor is alive
+ * 
+ * return: 1 if responsive, -1 otherwise
+ */
 uint8_t dht22_response()
 {
    PORT_DIR=1; 
@@ -36,6 +48,13 @@ uint8_t dht22_response()
 	return res;
 }
 
+/*
+ * Function:  read_data 
+ * --------------------
+ * Read 8 bits of sensor data
+ * 
+ * return: 1 byte of read values from the DHT22
+ */
 uint8_t read_data(){
 	uint8_t i;
     // read 8 bits of data
