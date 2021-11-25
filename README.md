@@ -11,13 +11,22 @@
 
 ## Example
 ```
-dhtvalues_t sensor_values;
-Delay10KTCYx(200); //wait 2s before every reading        
-if(readValues(&sensor_values))
-    sprintf(Text, "humi:%.2f temp:%.2f \r\n",sensor_values.humidity,sensor_values.temperature);
-else
-    sprintf(Text, "Error reading the sensor \r\n");
-USARTOut(Text, strlen(Text));       
+void main(void) {
+    Init_IO();
+    char Text[128];
+    dhtvalues_t sensor_values;
+    while(1)
+    {
+        PORTA = 0x04; 
+        Delay10KTCYx(200); //wait 2s before every reading        
+        if(readValues(&sensor_values))
+            sprintf(Text, "humi:%.2f temp:%.2f \r\n",sensor_values.humidity,sensor_values.temperature);
+        else
+             sprintf(Text, "Error reading the sensor \r\n");
+        USARTOut(Text, strlen(Text));       
+        PORTA = 0x05; 
+    }     
+}    
 ```
 
 ## License

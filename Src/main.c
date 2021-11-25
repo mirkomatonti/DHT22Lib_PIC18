@@ -96,7 +96,6 @@ void main(void) {
     Init_IO();
     char Text[128];
     dhtvalues_t sensor_values;
-    sensor_values.sensorPin=PORTDbits.RD0;
     while(1)
     {
         PORTA = 0x04; 
